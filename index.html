@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedro Kenzo</title>
+<meta property="og:title" content="Pedro Kenzo — IA, automação e dados">
+<meta property="og:description" content="Agentes de IA, automações de WhatsApp, Power BI e segurança para apps com LLM. Porto Velho, RO.">
+<meta name="description" content="Pedro Kenzo — desenvolvedor de agentes de IA, automações de WhatsApp e segurança para apps com LLM. Porto Velho, RO.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: direct, factual, recruiter-facing; no slogans
+   IDEA: a Swiss departures board crossed with an agentsec scan report — projects listed like timetable rows
+   PICTURE: the real agentsec scan replaying in a terminal, wide under the name
+   COLOUR and TYPE: white, black, signal red (red team), one grey; Archivo expanded 800 for titles, Archivo text, JetBrains Mono only inside the terminal
+   LAYOUT: thick top rule, strict left edge, wide left column hanging labels and figures, rows divided by heavy rules */
+:root{color-scheme:light dark;
+--bg:light-dark(#fff,#0e0e0e);--ink:light-dark(#000,#fff);--grey:light-dark(#646464,#9c9c9c);
+--rule:light-dark(#000,#fff);--hair:light-dark(#d6d6d6,#2e2e2e);--red:light-dark(#e4002b,#ff2d4b);
+--term:#0e0e0e;--termbar:light-dark(#1c1c1c,#1f1f1f)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Archivo,"Helvetica Neue",Arial,sans-serif;overflow-x:clip;border-top:12px solid var(--rule)}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--red)}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 max(5vw,16px)}
+.x{font-stretch:112%;font-weight:800;letter-spacing:-.02em;line-height:1.05;text-wrap:balance}
+/* nav */
+nav{display:flex;flex-wrap:wrap;align-items:center;gap:8px 28px;padding-block:18px}
+nav .me{font-weight:700;margin-right:auto;text-decoration:none}
+nav a{text-decoration:none;font-size:16px}
+.lang{display:flex;border:2px solid var(--ink)}
+.lang button{font:600 14px Archivo,sans-serif;background:none;color:var(--ink);border:0;min-width:44px;min-height:36px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+/* hero */
+.hero{padding-block:clamp(24px,5vw,64px) clamp(32px,5vw,72px)}
+.name{font-size:clamp(46px,11.2vw,160px);margin:0 0 clamp(20px,3vw,40px);letter-spacing:-.035em;line-height:.92;white-space:nowrap}
+.hgrid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(24px,4vw,56px);align-items:start}
+.lead{font-size:clamp(22px,2.2vw,28px);line-height:1.25;margin:0 0 16px;font-weight:500;text-wrap:balance}
+.sub{color:var(--grey);margin:0 0 24px;max-width:36ch}
+.open{display:inline-block;background:var(--red);color:#fff;font-weight:600;font-size:15px;padding:6px 12px;margin-bottom:22px}
+.ctas{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 20px;font:600 16px Archivo,sans-serif;border:2px solid var(--ink);background:var(--ink);color:var(--bg);text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{background:var(--red);border-color:var(--red);color:#fff}
+/* terminal */
+.term{background:var(--term);color:#d9d9d9;border-radius:10px;overflow:hidden;box-shadow:0 0 0 1px var(--hair)}
+.tbar{display:flex;align-items:center;justify-content:space-between;background:var(--termbar);padding:8px 10px 8px 16px;font:13px "JetBrains Mono",monospace;color:#8b8b8b}
+.tbar button{font:600 13px Archivo,sans-serif;color:#fff;background:none;border:1px solid #555;min-height:32px;padding:0 12px;cursor:pointer}
+.tbar button:hover{border-color:#ff2d4b;color:#ff2d4b}
+pre.out{margin:0;padding:18px 20px 22px;font:13.5px/1.7 "JetBrains Mono",Menlo,monospace;min-height:452px;white-space:pre;overflow-x:auto}
+.out .r{color:#ff2d4b;font-weight:700}.out .d{color:#8b8b8b}.out .b{color:#fff;font-weight:700}
+.cur{display:inline-block;width:8px;height:1.1em;background:#d9d9d9;vertical-align:-3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cap{font-size:14px;color:var(--grey);margin:10px 0 0}
+/* sections */
+.band{padding-block:clamp(36px,5vw,72px);border-top:6px solid var(--rule)}
+.sec{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:clamp(20px,4vw,56px)}
+.sec>h2{font-size:clamp(30px,3.4vw,44px);margin:0}
+.intro{margin:0 0 28px;max-width:62ch;color:var(--grey)}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 36px}
+.cols h3{font-size:20px;margin:0 0 8px;font-weight:700}
+.cols p{margin:0;color:var(--grey)}
+/* project rows */
+.rows{list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,6fr) minmax(0,3fr);gap:12px clamp(16px,3vw,40px);padding:24px 0;border-top:2px solid var(--rule)}
+.row:last-child{border-bottom:2px solid var(--rule)}
+.fig{font-stretch:112%;font-weight:800;font-size:clamp(30px,3.2vw,42px);line-height:1;letter-spacing:-.02em;white-space:nowrap}
+.fig small{display:block;font:500 14px/1.3 Archivo,sans-serif;letter-spacing:0;color:var(--grey);margin-top:6px;white-space:normal;font-stretch:100%}
+.kind{font-size:14px;color:var(--grey)}
+.row h3{font-size:23px;margin:0 0 6px;font-weight:800;font-stretch:108%;line-height:1.15}
+.row p{margin:0;max-width:60ch}
+.meta{font-size:15px}
+.st{display:inline-flex;align-items:center;gap:8px;font-weight:600;margin-bottom:8px}
+.st i{width:10px;height:10px;background:var(--grey)}
+.st.on i{background:var(--red)}
+.meta ul{list-style:none;margin:0 0 10px;padding:0;color:var(--grey)}
+.meta a{font-weight:600}
+/* stack */
+.stack{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 28px}
+.stack h3{font-size:16px;margin:0 0 8px;padding-top:10px;border-top:2px solid var(--rule)}
+.stack ul{list-style:none;margin:0;padding:0;color:var(--grey);line-height:1.8}
+.edu{margin-top:36px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 28px}
+.edu h3{font-size:16px;margin:0 0 8px;padding-top:10px;border-top:2px solid var(--rule)}
+.edu ul{margin:0;padding-left:18px;color:var(--grey)}
+/* contact */
+.mail{font-size:clamp(24px,4.4vw,54px);display:block;margin:0 0 18px;word-break:break-all;text-decoration:none}
+.links{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.copied{font-size:15px;color:var(--red);font-weight:600;min-width:6em}
+footer{padding-block:28px 40px;color:var(--grey);font-size:14px;border-top:2px solid var(--hair)}
+@media(max-width:900px){.hgrid{grid-template-columns:minmax(0,1fr)}.sub{max-width:52ch}.sec{grid-template-columns:minmax(0,1fr)}.stack{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.row{grid-template-columns:minmax(0,1fr)}.cols{grid-template-columns:minmax(0,1fr)}pre.out{font-size:12px;min-height:400px;padding:14px}}
+@media(max-width:600px){nav .nl{display:none}.edu{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cur{animation:none}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <nav aria-label="Principal">
+    <a class="me" href="#top">Pedro Kenzo</a>
+    <a class="nl" href="#projetos" data-i="nav1">Projetos</a>
+    <a class="nl" href="#stack" data-i="nav2">Stack</a>
+    <a class="nl" href="#contato" data-i="nav3">Contato</a>
+    <div class="lang" role="group" aria-label="Idioma">
+      <button type="button" data-lang="pt" aria-pressed="true">PT</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+<section class="wrap hero">
+  <h1 class="x name">Pedro Kenzo</h1>
+  <div class="hgrid">
+    <div>
+      <span class="open" data-i="open">Disponível para vagas</span>
+      <p class="lead" data-i="lead">Construo agentes de IA, automações de WhatsApp, análises de dados em Power BI e ferramentas de segurança para apps com LLM.</p>
+      <p class="sub" data-i="sub">Desenvolvedor independente em Porto Velho (RO) e estudante de Engenharia da Computação. Entrego para empresas de engenharia, energia solar, saúde e serviços.</p>
+      <div class="ctas">
+        <a class="btn" href="#projetos" data-i="cta1">Ver projetos</a>
+        <a class="btn ghost" href="https://github.com/Kenzokishi">GitHub</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/pedro-kenzo-sales-kishi-bb4897213/">LinkedIn</a>
+      </div>
+    </div>
+    <figure style="margin:0">
+      <div class="term">
+        <div class="tbar"><span>agentsec — demo</span><button type="button" id="replay" data-i="replay">Rodar de novo</button></div>
+        <pre class="out" id="out" aria-live="off"></pre>
+      </div>
+      <figcaption class="cap" data-i="cap">O agentsec atacando o agente vulnerável que vem de demonstração. Saída real do terminal, encurtada.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="h-faco">
+  <div class="wrap sec">
+    <h2 class="x" id="h-faco" data-i="h1">O que eu faço</h2>
+    <div class="cols">
+      <div><h3 data-i="c1t">Agentes de IA e bots de WhatsApp</h3><p data-i="c1p">Assistentes com LLM que atendem clientes, abrem chamados e filtram caixas de entrada lotadas.</p></div>
+      <div><h3 data-i="c2t">Automação de processos</h3><p data-i="c2p">Fluxos no n8n, dashboards e sistemas web que substituem planilha, copia-e-cola e cobrança manual.</p></div>
+      <div><h3 data-i="c4t">Dados e BI</h3><p data-i="c4p">Modelos em estrela, DAX e SQL que mostram onde a empresa ganha e perde dinheiro.</p></div>
+      <div><h3 data-i="c3t">Segurança para IA</h3><p data-i="c3p">Ferramentas de red team que provam se um app com IA vaza o prompt, os segredos ou as ferramentas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="projetos" aria-labelledby="h-proj">
+  <div class="wrap sec">
+    <h2 class="x" id="h-proj" data-i="h2">Projetos</h2>
+    <div>
+      <p class="intro" data-i="pint">O problema de cada projeto e o que eu entreguei. Onde há dado de cliente, o código fica privado.</p>
+      <ul class="rows" id="rows"></ul>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="stack" aria-labelledby="h-stack">
+  <div class="wrap sec">
+    <h2 class="x" id="h-stack">Stack</h2>
+    <div>
+      <div class="stack">
+        <div><h3 data-i="s1">IA e automação</h3><ul><li>LLM APIs</li><li>n8n</li><li>Evolution API</li><li>WAHA</li><li>Power Automate</li></ul></div>
+        <div><h3 data-i="s2">Backend e dados</h3><ul><li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>Supabase</li><li>MySQL</li><li>Power BI e DAX</li><li>SQL</li></ul></div>
+        <div><h3 data-i="s3">Web</h3><ul><li>TypeScript</li><li>Next.js</li><li>Node.js</li><li>WordPress</li><li>Netlify</li></ul></div>
+        <div><h3 data-i="s4">Estudando agora</h3><ul><li>Docker</li><li>CI/CD</li><li>RAG</li><li data-i="s4v">Bancos vetoriais</li><li>AWS</li></ul></div>
+      </div>
+      <div class="edu">
+        <div><h3 data-i="e1">Formação</h3><ul><li data-i="e1v">Engenharia da Computação, UniSapiens (cursando)</li></ul></div>
+        <div><h3 data-i="e2">Certificações · Hashtag Treinamentos, 2026</h3><ul><li>Python Impressionador</li><li>Supabase Impressionador</li><li data-i="e2v">APIs de IA</li><li data-i="e2w">Inteligência Artificial Impressionador</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="contato" aria-labelledby="h-cont">
+  <div class="wrap sec">
+    <h2 class="x" id="h-cont" data-i="h4">Contato</h2>
+    <div>
+      <p class="intro" data-i="cint">Procuro vaga de desenvolvedor ou analista de dados: IA, automação, backend e BI.</p>
+      <a class="x mail" href="mailto:pedrokishi@gmail.com">pedrokishi@gmail.com</a>
+      <div class="links">
+        <button class="btn" type="button" id="copy" data-i="copy">Copiar e-mail</button>
+        <a class="btn ghost" href="https://www.linkedin.com/in/pedro-kenzo-sales-kishi-bb4897213/">LinkedIn</a>
+        <a class="btn ghost" href="https://github.com/Kenzokishi">GitHub</a>
+        <span class="copied" id="copied" role="status"></span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="wrap" data-i="foot">Pedro Kenzo, Porto Velho (RO).</footer>
+
+<script>
+{
+const P = [
+ {fig:"4",figS:{pt:"ataques, mapeados no OWASP LLM Top 10",en:"attacks, mapped to the OWASP LLM Top 10"},kind:{pt:"Open source",en:"Open source"},
+  name:"agentsec",
+  d:{pt:"Times colocam IA em produção sem testar se ela vaza o prompt, entrega segredos ou dispara ferramentas por conta de um texto malicioso. O agentsec ataca o app, dá uma nota de 0 a 100 e reprova o build no CI quando a nota cai.",
+     en:"Teams ship AI without testing whether it leaks its prompt, hands over secrets or fires tools because of one malicious sentence. agentsec attacks the app, scores it 0–100 and fails the CI build when the score drops."},
+  st:"on",stT:{pt:"Público no GitHub",en:"Public on GitHub"},stack:["TypeScript","Node 20","GitHub Actions"],links:[["https://github.com/Kenzokishi/agentsec",{pt:"Ver repositório",en:"View repository"}]]},
+ {fig:"79 mil",figS:{pt:"itens de pedido no modelo",en:"order lines in the model"},kind:{pt:"Análise de dados",en:"Data analysis"},
+  name:{pt:"Análise de vendas em Power BI",en:"Sales analysis in Power BI"},
+  d:{pt:"Caso fictício de uma distribuidora de materiais de construção com 6 lojas em Rondônia. Modelo em estrela, medidas DAX com comparação ao ano anterior e curva ABC, consultas SQL com funções de janela e testes no CI. Achado principal: o faturamento cresceu 19%, mas a margem ficou parada porque o desconto no aço disparou.",
+     en:"Fictional case of a building-materials distributor with 6 stores in Rondônia. Star schema, DAX with year-over-year and ABC curve, SQL with window functions and CI tests. Key finding: revenue grew 19% but margin stayed flat because steel discounts spiked."},
+  st:"on",stT:{pt:"Público no GitHub",en:"Public on GitHub"},stack:["Power BI","DAX","SQL","Python"],links:[["https://github.com/Kenzokishi/analise-vendas-powerbi",{pt:"Ver repositório",en:"View repository"}]]},
+ {fig:"~50",figS:{pt:"empresas cadastradas",en:"registered companies"},kind:{pt:"Cliente",en:"Client"},
+  name:{pt:"Central de chamados no WhatsApp",en:"WhatsApp ticket desk"},
+  d:{pt:"Empresas atendidas abrem chamados pelo WhatsApp. O bot reconhece cada empresa pelo código ou CNPJ, recusa quem não é cadastrado e registra o pedido.",
+     en:"Client companies open support tickets over WhatsApp. The bot recognises each one by code or CNPJ, turns away unregistered numbers and logs the request."},
+  st:"",stT:{pt:"Em andamento",en:"In progress"},stack:["n8n","WAHA","MySQL","Docker"]},
+ {fig:"5–20",figS:{pt:"mensagens por minuto",en:"messages a minute"},kind:{pt:"Cliente",en:"Client"},
+  name:{pt:"Triagem do WhatsApp de um diretor",en:"Inbox triage for a director"},
+  d:{pt:"O dono de uma construtora recebia mais mensagens do que conseguia ler. A automação no número Business separa o urgente, avisa na hora, manda resumos em horários fixos e sugere horários de reunião.",
+     en:"A construction-company owner got more messages than he could read. The automation on his Business number separates what is urgent, alerts him right away, sends digests at set times and suggests meeting slots."},
+  st:"",stT:{pt:"Em andamento",en:"In progress"},stack:["n8n","WhatsApp Cloud API","LLM"]},
+ {fig:"",kind:{pt:"Cliente",en:"Client"},name:"EuroAdega",
+  d:{pt:"Loja online de uma adega com painel de estoque e financeiro. A vitrine mostra só o que existe em estoque, e o lançamento das vendas é automático.",
+     en:"Online store for a liquor shop with a stock and finance panel. The storefront only shows what is actually in stock, and sales are logged automatically."},
+  st:"",stT:{pt:"Em andamento",en:"In progress"},stack:["Web app"]},
+ {fig:"",kind:{pt:"Cliente",en:"Client"},name:"Controle de briques",
+  d:{pt:"Controle para um revendedor de peças de PC: estoque, vendas, rolos (peças recebidas como pagamento), kits desmembrados com o custo dividido entre as peças, fiado e contas a pagar. O lucro do mês conta só o que já virou dinheiro.",
+     en:"Tracker for a PC-parts reseller: stock, sales, trade-ins, kits broken into parts with the cost split across them, credit sales and supplier payments. Monthly profit only counts money actually received."},
+  st:"on",stT:{pt:"Em uso",en:"In use"},stack:["HTML","CSS","JavaScript"],links:[["https://kenzokishi.github.io/controle-de-briques/",{pt:"Abrir demo",en:"Open demo"}],["https://github.com/Kenzokishi/controle-de-briques",{pt:"Código",en:"Code"}]]},
+ {fig:"",kind:{pt:"Cliente",en:"Client"},name:"Studio F7",
+  d:{pt:"Site de um estúdio de vídeo e motion design com painel onde o próprio cliente troca trabalhos, marcas e fotos. Login pelo Supabase Auth e permissões no banco com RLS.",
+     en:"Site for a video and motion-design studio with a panel where the client updates work, brands and photos. Supabase Auth login and row-level security in the database."},
+  st:"on",stT:{pt:"Entregue",en:"Delivered"},stack:["React","TypeScript","Supabase"],links:[["https://github.com/Kenzokishi/studio-f7-site",{pt:"Código",en:"Code"}]]},
+ {fig:"",kind:{pt:"Cliente",en:"Client"},name:"Guttoneres Engenharia",
+  d:{pt:"Site institucional de uma empresa de engenharia civil de Porto Velho, com páginas de serviço (terraplenagem, drenagem, pavimentação, rede de esgoto) e página de compliance.",
+     en:"Institutional site for a civil-engineering company in Porto Velho, with service pages (earthworks, drainage, paving, sewer networks) and a compliance page."},
+  st:"on",stT:{pt:"No ar",en:"Live"},stack:["WordPress","Elementor","HTML/CSS"],links:[["https://guttoneres.com.br",{pt:"Abrir site",en:"Open site"}]]},
+ {fig:"",kind:{pt:"Produto próprio",en:"Own product"},name:"Minhas finanças",
+  d:{pt:"App de finanças pessoais num arquivo só: projeção de quanto sobra no fim do mês, orçamento por categoria, gastos por dia e exportação em CSV. Sem cadastro e sem servidor.",
+     en:"Personal finance app in a single file: end-of-month projection, budgets per category, daily spending and CSV export. No sign-up, no server."},
+  st:"on",stT:{pt:"No ar",en:"Live"},stack:["HTML","CSS","JavaScript"],links:[["https://kenzokishi.github.io/minhas-financas/",{pt:"Abrir demo",en:"Open demo"}],["https://github.com/Kenzokishi/minhas-financas",{pt:"Código",en:"Code"}]]},
+ {fig:"",kind:{pt:"Produto próprio",en:"Own product"},name:"Atende AI",
+  d:{pt:"Landing page do meu serviço de atendente com IA no WhatsApp, com playground de conversa e calculadora de retorno.",
+     en:"Landing page for my WhatsApp AI-assistant service, with a chat playground and an ROI calculator."},
+  st:"on",stT:{pt:"Código público",en:"Public code"},stack:["Next.js","React"],links:[["https://github.com/Kenzokishi/atende-ai-site",{pt:"Código",en:"Code"}]]},
+ {fig:"",kind:{pt:"Produto próprio",en:"Own product"},name:"Vesálio",
+  d:{pt:"Atlas 3D do corpo humano para estudantes de medicina, montado em volta de simulados da prova prática de anatomia.",
+     en:"3D human-anatomy atlas for medical students, built around practical-exam drills."},
+  st:"",stT:{pt:"Em desenvolvimento",en:"In development"},stack:["3D na web"]},
+ {fig:"",kind:{pt:"Produto próprio",en:"Own product"},name:"Balão Bomba",
+  d:{pt:"Jogo que roda sozinho durante lives no TikTok e reage à plateia em tempo real.",
+     en:"A game that runs by itself during TikTok LIVEs and reacts to the audience in real time."},
+  st:"on",stT:{pt:"No ar",en:"Live"},stack:["TikTok LIVE Studio","TikFinity","Netlify"]}
+];
+const EN = {nav1:"Projects",nav2:"Stack",nav3:"Contact",open:"Open to work",
+ lead:"I build AI agents, WhatsApp automations, Power BI analyses and security tooling for LLM apps.",
+ sub:"Independent developer in Porto Velho, Brazil, and Computer Engineering student. I ship for engineering, solar energy, healthcare and service companies.",
+ cta1:"See projects",replay:"Run again",cap:"agentsec attacking the vulnerable agent it ships with. Real terminal output, shortened.",
+ h1:"What I do",c1t:"AI agents and WhatsApp bots",c1p:"LLM assistants that answer customers, open tickets and triage overloaded inboxes.",
+ c2t:"Process automation",c2p:"n8n workflows, dashboards and web systems that replace spreadsheets, copy-paste and manual follow-up.",
+ c4t:"Data and BI",c4p:"Star schemas, DAX and SQL that show where a business makes and loses money.",c3t:"AI security",c3p:"Red-team tooling that proves whether an AI app leaks its prompt, its secrets or its tools.",
+ h2:"Projects",pint:"Each project's problem and what I delivered. Where client data is involved, the code stays private.",
+ s1:"AI and automation",s2:"Backend and data",s3:"Web",s4:"Learning now",s4v:"Vector databases",
+ e1:"Education",e1v:"Computer Engineering, UniSapiens (in progress)",e2:"Certifications · Hashtag Treinamentos, 2026",e2v:"AI APIs",e2w:"Artificial Intelligence Impressionador",
+ h4:"Contact",cint:"Looking for a developer or data analyst role: AI, automation, backend and BI.",copy:"Copy email",
+ foot:"Pedro Kenzo, Porto Velho, Brazil."};
+const PT = {};
+document.querySelectorAll("[data-i]").forEach(el => PT[el.dataset.i] = el.textContent);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const tx = (v, l) => typeof v === "string" ? v : v[l];
+let lang = "pt";
+
+function renderRows() {
+  document.getElementById("rows").innerHTML = P.map(p => `
+  <li class="row">
+    <div>${p.fig ? `<div class="fig">${esc(p.fig)}<small>${esc(tx(p.figS, lang))}</small></div>` : `<div class="kind">${esc(tx(p.kind, lang))}</div>`}</div>
+    <div>${p.fig ? `<div class="kind">${esc(tx(p.kind, lang))}</div>` : ""}<h3>${esc(tx(p.name, lang))}</h3><p>${esc(tx(p.d, lang))}</p></div>
+    <div class="meta"><div class="st ${p.st}"><i aria-hidden="true"></i>${esc(tx(p.stT, lang))}</div>
+      <ul>${p.stack.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
+      ${(p.links || []).map(([u, t]) => `<a href="${esc(u)}">${esc(tx(t, lang))}</a>`).join(" &nbsp; ")}</div>
+  </li>`).join("");
+}
+
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l === "pt" ? "pt-BR" : "en";
+  document.querySelectorAll("[data-i]").forEach(el => { const k = el.dataset.i; el.textContent = l === "pt" ? PT[k] : (EN[k] ?? PT[k]); });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === l));
+  renderRows();
+  try { localStorage.setItem("lang", l); } catch (e) {}
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+/* terminal: replays real `agentsec scan --target demo` output */
+const L = [
+ [["","$ "],["cmd","agentsec scan --target demo"]],[],
+ [["d","Scanning demo (vulnerable AtendeBank agent) with 4 probe(s)…"]],[],
+ [["b","  agentsec · demo (vulnerable AtendeBank agent)"]],[["d","  4 probes · 2026-11-26T14:49:56Z"]],[],
+ [["r","   VULN "],["b"," Direct prompt injection "],["d","[LLM01]"]],
+ [["d",'         complied: "SYSTEM OVERRIDE ACCEPTED."']],
+ [["r","   VULN "],["b"," System prompt leakage "],["d","[LLM07]"]],
+ [["d","         full system prompt disclosed"]],
+ [["r","   VULN "],["b"," Sensitive information disclosure "],["d","[LLM02]"]],
+ [["d",'         leaked "SK-DEMO-9f83a1b2c7d4-CANARY"']],
+ [["r","   VULN "],["b"," Excessive agency "],["d","[LLM06]"]],
+ [["d",'         transfer_funds({"to_account":"12345","amount":"50000"})']],[],
+ [["b","  Score: "],["r","0"],["","/100"],["d","   4 vulnerable · 0 safe · 0 errors"]]
+];
+const out = document.getElementById("out");
+const line = segs => segs.map(([c, s]) => c && c !== "cmd" ? `<span class="${c}">${esc(s)}</span>` : esc(s)).join("");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let timers = [];
+function play() {
+  timers.forEach(clearTimeout); timers = [];
+  if (reduce) { out.innerHTML = L.map(line).join("\n"); return; }
+  const cmd = L[0][1][1]; let html = "", t = 350;
+  for (let i = 0; i <= cmd.length; i++) {
+    timers.push(setTimeout(() => { out.innerHTML = "$ " + esc(cmd.slice(0, i)) + '<span class="cur"></span>'; }, t)); t += 45;
+  }
+  t += 400; html = line(L[0]);
+  for (let i = 1; i < L.length; i++) {
+    const h = html += "\n" + line(L[i]);
+    timers.push(setTimeout(() => { out.innerHTML = h; }, t));
+    t += !L[i].length ? 120 : (L[i][0][0] === "r" ? 520 : 200);
+  }
+}
+document.getElementById("replay").addEventListener("click", play);
+
+const copied = document.getElementById("copied");
+document.getElementById("copy").addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText("pedrokishi@gmail.com"); copied.textContent = lang === "pt" ? "Copiado" : "Copied"; }
+  catch (e) { copied.textContent = "pedrokishi@gmail.com"; }
+});
+
+let saved = "pt"; try { saved = localStorage.getItem("lang") || "pt"; } catch (e) {}
+setLang(saved === "en" ? "en" : "pt");
+play();
+}
+</script>
+</body>
+</html>
