@@ -164,7 +164,7 @@ footer{padding-block:28px 40px;color:var(--grey);font-size:14px;border-top:2px s
     <div>
       <div class="stack">
         <div><h3 data-i="s1">IA e automação</h3><ul><li>n8n</li><li>Power Apps</li><li>Power Automate</li><li data-i="s1v">APIs de IA</li><li>Evolution API</li><li>WAHA</li></ul></div>
-        <div><h3 data-i="s2">Backend e dados</h3><ul><li>Python</li><li>Node.js e Express</li><li>FastAPI</li><li>PostgreSQL</li><li>Docker</li><li>Supabase</li><li>MySQL</li><li>Power BI e DAX</li><li>SQL</li></ul></div>
+        <div><h3 data-i="s2">Backend e dados</h3><ul><li>Python e FastAPI</li><li>Java e Spring Boot</li><li>Node.js e Express</li><li>PostgreSQL</li><li>Docker</li><li>Linux e Bash</li><li>Supabase</li><li>MySQL</li><li>Power BI e DAX</li><li>SQL</li></ul></div>
         <div><h3 data-i="s3">Web</h3><ul><li>JavaScript</li><li>TypeScript</li><li>React</li><li>Next.js</li><li>Node.js</li><li>HTML e CSS</li></ul></div>
         <div><h3 data-i="s4">Estudando agora</h3><ul><li data-i="s4v">Redes (CCNA 2)</li><li>RAG</li></ul></div>
       </div>
@@ -235,6 +235,18 @@ const P = [
   d:{pt:"Site institucional de uma empresa de engenharia civil de Porto Velho, com páginas de serviço (terraplenagem, drenagem, pavimentação, rede de esgoto) e página de compliance.",
      en:"Institutional site for a civil-engineering company in Porto Velho, with service pages (earthworks, drainage, paving, sewer networks) and a compliance page."},
   st:"on",stT:{pt:"No ar",en:"Live"},stack:["HTML","CSS","JavaScript","WordPress"],links:[["https://kenzokishi.github.io/guttoneres-site/",{pt:"Versão nova",en:"New version"}],["https://guttoneres.com.br",{pt:"Site no ar",en:"Live site"}],["https://github.com/Kenzokishi/guttoneres-site",{pt:"Código",en:"Code"}]]},
+ {fig:"14",figS:{pt:"testes com PostgreSQL",en:"tests against PostgreSQL"},kind:{pt:"Back-end",en:"Back-end"},name:"briques-api",
+  d:{pt:"API em Java do Controle de briques: estoque, vendas com rolo e fiado, desmonte de kits com rateio de custo e lucro que só é confirmado quando o dinheiro entra. Login com JWT e documentação no Swagger.",
+     en:"Java API for the resale tracker: stock, sales with trade-ins and credit, kit break-down with cost split, and profit that is only confirmed once the money is in. JWT login and Swagger docs."},
+  st:"on",stT:{pt:"Código público",en:"Public code"},stack:["Java","Spring Boot","PostgreSQL","Docker"],links:[["https://github.com/Kenzokishi/briques-api",{pt:"Código",en:"Code"}]]},
+ {fig:"",kind:{pt:"Back-end",en:"Back-end"},name:{pt:"Mapa de cotação",en:"Quote comparison"},
+  d:{pt:"API em Python que compara propostas de fornecedores pela mediana, descarta as vencidas, marca preços fora da curva e exporta o mapa para Excel.",
+     en:"Python API that compares supplier quotes by the median, drops expired ones, flags outliers and exports the comparison to Excel."},
+  st:"on",stT:{pt:"Código público",en:"Public code"},stack:["Python","FastAPI","SQLAlchemy"],links:[["https://github.com/Kenzokishi/cotacoes-api",{pt:"Código",en:"Code"}]]},
+ {fig:"",kind:{pt:"Infraestrutura",en:"Infrastructure"},name:"docker-backup",
+  d:{pt:"Scripts em Bash para backup e restauração de volumes do Docker, com checksum, retenção e alerta por webhook quando um serviço cai. Roda pelo cron.",
+     en:"Bash scripts to back up and restore Docker volumes with checksums and retention, plus a webhook alert when a service goes down. Runs from cron."},
+  st:"on",stT:{pt:"Código público",en:"Public code"},stack:["Bash","Docker","Linux"],links:[["https://github.com/Kenzokishi/docker-backup",{pt:"Código",en:"Code"}]]},
  {fig:"",kind:{pt:"Produto próprio",en:"Own product"},name:"Minhas finanças",
   d:{pt:"App de finanças pessoais num arquivo só: projeção de quanto sobra no fim do mês, orçamento por categoria, gastos por dia e exportação em CSV. Sem cadastro e sem servidor.",
      en:"Personal finance app in a single file: end-of-month projection, budgets per category, daily spending and CSV export. No sign-up, no server."},
